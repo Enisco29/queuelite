@@ -70,7 +70,13 @@ as $$
 declare
   target_queue_id uuid;
 begin
-  target_queue_id := case when tg_table_name = 'queues' then new.id else new.queue_id end;
+   if tg_table_name = 'queues' then
+    target_queue_id := new.id;
+  elsif tg_table_name = 'queue_entries' then
+    target_queue_id := new.queue_id;
+  else
+    raise exception 'bump_queue_revision called from unexpected table: %', tg_table_name;
+  end if;
   insert into public.queue_public_state (queue_id, revision, updated_at)
   values (target_queue_id, 1, now())
   on conflict (queue_id) do update
