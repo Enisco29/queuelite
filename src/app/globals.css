@@ -1,56 +1,136 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #f7f7f4;
+  --canvas: #f6f7f5;
   --surface: #ffffff;
-  --ink: #18201b;
-  --muted: #667068;
-  --line: #dde2dc;
+  --ink: #17201a;
+  --muted: #667069;
+  --line: #dde3dd;
+  --line-strong: #c8d0c9;
   --brand: #17643a;
-  --brand-dark: #104c2c;
-  --brand-soft: #eaf4ed;
+  --brand-dark: #125331;
+  --brand-soft: #edf6f0;
+  --danger: #b42318;
+  --danger-soft: #fef3f2;
 }
 
-* { box-sizing: border-box; }
-html { background: var(--canvas); }
+* {
+  box-sizing: border-box;
+}
+html {
+  background: var(--canvas);
+}
 body {
   margin: 0;
   min-height: 100vh;
   background: var(--canvas);
   color: var(--ink);
-  font-family: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   text-rendering: optimizeLegibility;
 }
-button, input, select { font: inherit; }
-button, a { -webkit-tap-highlight-color: transparent; }
-a { color: inherit; text-decoration: none; }
-::selection { background: #cce6d3; }
-
-.container-page { width: min(1120px, calc(100% - 2rem)); margin-inline: auto; }
-.field-label { display: block; margin-bottom: .5rem; color: #3f4942; font-size: .875rem; font-weight: 700; }
-.text-input {
-  width: 100%; min-height: 3rem; border: 1px solid #cfd5cf; border-radius: .75rem;
-  background: white; padding: .75rem .875rem; color: #171a18; outline: none;
-  transition: border-color .15s, box-shadow .15s;
+button,
+input,
+select {
+  font: inherit;
 }
-.text-input::placeholder { color: #9aa19c; }
-.text-input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(23, 100, 58, .12); }
-.text-input:disabled { background: #f5f5f3; color: #757b76; }
+button:not(:disabled) {
+  cursor: pointer;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+::selection {
+  background: #cce6d3;
+}
 
-/* Compatibility classes while older forms use the new tokens. */
-.card { border: 1px solid var(--line); background: var(--surface); border-radius: 1rem; }
-.label { display: block; margin-bottom: .5rem; color: #3f4942; font-size: .875rem; font-weight: 700; }
-.input { width: 100%; min-height: 3rem; border: 1px solid #cfd5cf; border-radius: .75rem; background: white; padding: .75rem .875rem; outline: none; }
-.input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(23, 100, 58, .12); }
-.button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; gap: .5rem; border: 0; border-radius: .75rem; padding: .65rem 1rem; background: var(--brand); color: white; font-size: .875rem; font-weight: 700; cursor: pointer; }
-.button:hover { background: var(--brand-dark); }
-.button:disabled { cursor: not-allowed; opacity: .45; }
-.button-secondary { border: 1px solid #d4d8d4; background: white; color: var(--ink); }
-.button-secondary:hover { background: #f5f5f3; }
-.button-danger { background: #b42318; }
-.button-danger:hover { background: #8f1c13; }
-.eyebrow { color: var(--brand); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.container-page,
+.container-app {
+  width: min(1180px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+.container-marketing {
+  width: min(1200px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+.container-narrow {
+  width: min(560px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+.interactive {
+  transition:
+    color 150ms,
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms,
+    opacity 150ms;
+}
+.interactive:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+.field-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #3f4942;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.text-input {
+  width: 100%;
+  min-height: 3rem;
+  border: 1px solid #cfd5cf;
+  border-radius: 0.75rem;
+  background: white;
+  padding: 0.75rem 0.875rem;
+  color: #171a18;
+  outline: none;
+  transition:
+    border-color 150ms,
+    box-shadow 150ms;
+}
+.text-input::placeholder {
+  color: #9aa19c;
+}
+.text-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(23, 100, 58, 0.12);
+}
+.text-input:disabled {
+  background: #f5f5f3;
+  color: #757b76;
+}
+
+dialog::backdrop {
+  background: rgba(15, 23, 18, 0.42);
+}
+
+@media (min-width: 640px) {
+  .container-page,
+  .container-app,
+  .container-marketing,
+  .container-narrow {
+    width: calc(100% - 3rem);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

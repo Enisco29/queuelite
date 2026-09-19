@@ -4,6 +4,7 @@ import { CustomerQueue } from "@/components/customer/customer-queue";
 import { customerCookieName, hashCustomerToken } from "@/lib/server/customer-token";
 import { findPublicQueue, getCustomerState, getWaitingCount } from "@/lib/server/public-queue";
 import type { CustomerQueueState } from "@/lib/types";
+import { CompactBrandHeader } from "@/components/navigation/brand";
 
 export const dynamic = "force-dynamic";
 
@@ -23,5 +24,5 @@ export default async function PublicQueuePage({ params }: { params: Promise<{ sl
     peopleAhead: null,
     estimatedWaitMinutes: null,
   };
-  return <CustomerQueue initialState={initialState} />;
+  return <><CompactBrandHeader /><CustomerQueue initialState={initialState} /></>;
 }

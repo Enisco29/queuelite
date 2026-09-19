@@ -42,3 +42,10 @@ export interface OwnerQueueState {
   waiting: QueueEntry[];
   recent: QueueEntry[];
 }
+
+export interface OwnerQueueSummary {
+  queue: Queue;
+  waitingCount: number;
+  serving: Pick<QueueEntry, "id" | "customer_name"> | null;
+  estimatedWaitMinutes: number;
+}

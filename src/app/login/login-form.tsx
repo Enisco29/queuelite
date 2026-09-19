@@ -34,9 +34,9 @@ export function LoginForm({ oauthFailed = false }: { oauthFailed?: boolean }) {
   return (
     <Card className="p-5 sm:p-8">
       <div>
-        <p className="text-sm font-semibold text-green-700">Business owners</p>
-        <h1 className="mt-1 text-3xl font-bold tracking-[-.04em] text-neutral-950">Sign in to QueueLite</h1>
-        <p className="mt-3 text-sm leading-6 text-neutral-600">Use your Google account to securely access and manage your queues.</p>
+        <p className="text-sm font-semibold text-[#17643a]">Business owners</p>
+        <h1 className="mt-1 text-3xl font-bold tracking-[-.035em] text-[#17201a]">Sign in to QueueLite</h1>
+        <p className="mt-3 text-sm leading-6 text-[#667069]">Use your Google account to securely access and manage your queues.</p>
         {(oauthFailed || error) && (
           <div className="mt-5">
             <InlineAlert>{error || "Google sign-in did not complete. Please try again."}</InlineAlert>

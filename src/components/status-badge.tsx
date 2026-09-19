@@ -12,5 +12,5 @@ const styles: Record<EntryStatus | QueueStatus, string> = {
 };
 
 export function StatusBadge({ status, inverse = false }: { status: EntryStatus | QueueStatus; inverse?: boolean }) {
-  return <span className={`inline-flex shrink-0 items-center rounded-full border px-2.5 py-1 text-xs font-bold capitalize ${inverse ? "border-white/20 bg-white/10 text-white" : styles[status]}`}>{status}</span>;
+  return <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${inverse ? "border-white/20 bg-white/10 text-white" : styles[status]}`}><span className="size-1.5 rounded-full bg-current opacity-70" aria-hidden="true" />{status}</span>;
 }
