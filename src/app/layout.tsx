@@ -14,16 +14,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header className="border-b border-black/8 bg-white/70 backdrop-blur">
-          <div className="container-page flex h-16 items-center justify-between">
-            <Link href="/" className="text-xl font-black tracking-[-0.04em]">
+        <header className="border-b border-neutral-200 bg-white">
+          <div className="container-page flex h-16 items-center">
+            <Link href="/" className="text-lg font-bold tracking-[-0.04em] text-neutral-950">
               Queue<span className="text-green-700">Lite</span>
-            </Link>
-            <Link
-              href="/dashboard"
-              className="text-sm font-bold text-green-800 hover:text-green-950"
-            >
-              Owner dashboard
             </Link>
           </div>
         </header>

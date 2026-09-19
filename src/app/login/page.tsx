@@ -2,9 +2,10 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { LoginForm } from "./login-form";
 
-export default async function LoginPage() {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (user) redirect("/dashboard");
-  return <main className="container-page max-w-md py-16"><LoginForm /></main>;
+  const { error } = await searchParams;
+  return <main className="container-page max-w-md py-12 sm:py-16"><LoginForm oauthFailed={error === "oauth_failed"} /><p className="mt-5 text-center text-xs leading-5 text-neutral-500">Secure owner access through Google and Supabase.</p></main>;
 }

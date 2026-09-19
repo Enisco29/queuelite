@@ -5,13 +5,14 @@ QueueLite is a lightweight digital waiting line for small walk-in businesses. Ow
 ## What is included
 
 - Next.js App Router, TypeScript, and Tailwind CSS
-- Supabase Postgres, email magic-link Auth, Row Level Security, and Realtime
+- Supabase Postgres, Google Auth, Row Level Security, and Realtime
 - Transaction-safe join ordering and queue transitions in Postgres
 - Secure anonymous customer identity using a random HttpOnly cookie and a stored SHA-256 hash
 - Owner queue creation, pause/open/close, call next, complete, skip, and queue settings
 - Public queue status, position, people ahead, estimated wait, leave, and live updates
 - Copyable public links and downloadable QR codes
 - A development-only demo admin at `/admin`
+- Filtered realtime revision subscriptions with authoritative state refetches
 
 ## Local setup
 
@@ -44,13 +45,16 @@ The demo admin requires `ENABLE_DEMO_ADMIN=true` and is always disabled when `NO
 
 ## Owner authentication
 
-Supabase email auth must allow this callback URL:
+Supabase Auth must allow both QueueLite callback URLs:
 
 ```text
 http://localhost:3000/auth/callback
+https://quelite.vercel.app/auth/callback
 ```
 
-Set the matching production URL in Supabase Auth settings and `NEXT_PUBLIC_APP_URL` when deploying. The login page uses email magic links. A signed-in owner can create queues from `/dashboard`.
+Set `NEXT_PUBLIC_APP_URL=https://quelite.vercel.app` in Vercel. The login page uses Google OAuth, while the existing server callback exchanges the authorization code and stores the Supabase session in cookies. A signed-in owner can create queues from `/dashboard`.
+
+Follow [the Google OAuth setup guide](docs/google-oauth.md) before testing sign-in.
 
 ## Database and security model
 
@@ -73,6 +77,12 @@ alter table public.queues alter column owner_id set not null;
 ```
 
 The included rate limiter is intentionally small and process-local. For a multi-instance public deployment, replace it with a shared edge/Redis-backed limiter.
+
+## Realtime behavior
+
+Both customer and owner screens subscribe to the current queue's row in `queue_public_state`. Database triggers increment its revision whenever visible queue state changes. A realtime event invalidates the client view, which then refetches the authoritative state from a no-cache endpoint.
+
+The clients also refetch after reconnecting, returning online, or becoming visible. They do not continuously poll. If a channel cannot reconnect, the UI marks the data as stale and exposes a manual refresh action.
 
 ## Verification
 
@@ -97,7 +107,7 @@ Core manual acceptance check:
 | Route | Purpose |
 |---|---|
 | `/` | Landing page |
-| `/login` | Owner magic-link sign-in |
+| `/login` | Owner Google sign-in |
 | `/dashboard` | Owner queue list |
 | `/dashboard/queues/new` | Queue creation |
 | `/dashboard/queues/[id]` | Live owner controls |

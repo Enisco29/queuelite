@@ -1,35 +1,39 @@
 import Link from "next/link";
+import { buttonClass } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export default function Home() {
   return (
     <main>
-      <section className="container-page grid min-h-[calc(100vh-4rem)] items-center gap-12 py-16 md:grid-cols-[1.1fr_.9fr]">
+      <section className="container-page grid min-h-[calc(100vh-4rem)] items-center gap-14 py-14 lg:grid-cols-[1.08fr_.92fr] lg:py-20">
         <div>
-          <p className="eyebrow">A calmer waiting line</p>
-          <h1 className="mt-4 max-w-3xl text-5xl font-black leading-[.98] tracking-[-.055em] sm:text-7xl">
-            Less crowding.<br /><span className="text-green-700">More clarity.</span>
-          </h1>
-          <p className="mt-7 max-w-xl text-lg leading-8 text-neutral-600">
-            Create a simple digital queue, share one link, and keep every walk-in customer up to date in real time.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link className="button px-6" href="/dashboard">Create a queue</Link>
-            <Link className="button button-secondary px-6" href="/q/demo">Try the demo queue</Link>
+          <p className="text-sm font-bold text-green-700">Simple queues for walk-in businesses</p>
+          <h1 className="mt-5 max-w-3xl text-5xl font-bold leading-[1.02] tracking-[-.06em] text-neutral-950 sm:text-6xl lg:text-7xl">A waiting line everyone understands.</h1>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-600">Share one link, keep customers informed, and run your queue without crowded waiting rooms or complicated software.</p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link className={buttonClass("primary")} href="/dashboard">Create a queue</Link>
+            <Link className={buttonClass("secondary")} href="/q/demo">View customer demo</Link>
           </div>
+          <p className="mt-5 text-sm text-neutral-500">No app download. Customers join without an account.</p>
         </div>
-        <div className="card relative overflow-hidden p-7 sm:p-10">
-          <div className="absolute -right-16 -top-16 size-48 rounded-full bg-lime-200/60" />
-          <p className="eyebrow relative">Today’s queue</p>
-          <div className="relative mt-8 rounded-2xl bg-green-900 p-7 text-white">
-            <p className="text-sm font-bold text-green-200">You’re up next</p>
-            <p className="mt-2 text-4xl font-black">Position 1</p>
-            <p className="mt-5 text-green-100">Estimated wait: about 10 minutes</p>
+
+        <Card className="overflow-hidden">
+          <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-5">
+            <div><p className="text-sm font-bold text-neutral-950">Today’s queue</p><p className="mt-1 text-xs text-neutral-500">Friday, 18 September</p></div>
+            <span className="rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-xs font-bold text-green-800">Open</span>
           </div>
-          <div className="relative mt-6 grid grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-black/8 p-5"><p className="text-3xl font-black">3</p><p className="mt-1 text-sm text-neutral-500">waiting</p></div>
-            <div className="rounded-2xl border border-black/8 p-5"><p className="text-3xl font-black">1</p><p className="mt-1 text-sm text-neutral-500">being served</p></div>
+          <div className="p-6">
+            <div className="rounded-xl bg-green-800 p-6 text-white">
+              <p className="text-xs font-bold uppercase tracking-[.12em] text-green-200">Now serving</p>
+              <p className="mt-3 text-3xl font-bold tracking-[-.04em]">Amara O.</p>
+              <p className="mt-2 text-sm text-green-100">Called just now</p>
+            </div>
+            <div className="mt-5 flex items-center justify-between border-b border-neutral-200 pb-3"><p className="text-sm font-bold text-neutral-950">Waiting</p><p className="text-sm font-semibold text-neutral-500">3 people</p></div>
+            <ol className="divide-y divide-neutral-200">
+              {["Tobi A.", "Maya K.", "Daniel E."].map((name, index) => <li key={name} className="flex items-center gap-3 py-3"><span className="flex size-8 items-center justify-center rounded-full bg-green-50 text-xs font-bold text-green-800">{index + 1}</span><span className="text-sm font-semibold text-neutral-800">{name}</span></li>)}
+            </ol>
           </div>
-        </div>
+        </Card>
       </section>
     </main>
   );

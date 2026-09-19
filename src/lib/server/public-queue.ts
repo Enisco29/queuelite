@@ -14,6 +14,17 @@ export async function findPublicQueue(slug: string): Promise<PublicQueue | null>
   return data as PublicQueue | null;
 }
 
+export async function getWaitingCount(queueId: string): Promise<number> {
+  const supabase = createAdminClient();
+  const { count, error } = await supabase
+    .from("queue_entries")
+    .select("id", { count: "exact", head: true })
+    .eq("queue_id", queueId)
+    .eq("status", "waiting");
+  if (error) throw error;
+  return count ?? 0;
+}
+
 export async function getCustomerState(slug: string, tokenHash: string): Promise<CustomerQueueState | null> {
   const supabase = createAdminClient();
   const { data, error } = await supabase.rpc("customer_queue_state", {

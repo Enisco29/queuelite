@@ -28,10 +28,13 @@ export interface QueueEntry {
 export interface CustomerQueueState {
   queue: Pick<Queue, "id" | "name" | "slug" | "status" | "average_service_minutes">;
   entry: Pick<QueueEntry, "id" | "customer_name" | "status" | "joined_at"> | null;
+  waitingCount: number;
   position: number | null;
   peopleAhead: number | null;
   estimatedWaitMinutes: number | null;
 }
+
+export type RealtimeConnectionState = "connecting" | "live" | "reconnecting" | "offline";
 
 export interface OwnerQueueState {
   queue: Queue;

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { CustomerQueue } from "@/components/customer/customer-queue";
 import { customerCookieName, hashCustomerToken } from "@/lib/server/customer-token";
-import { findPublicQueue, getCustomerState } from "@/lib/server/public-queue";
+import { findPublicQueue, getCustomerState, getWaitingCount } from "@/lib/server/public-queue";
 import type { CustomerQueueState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +16,12 @@ export default async function PublicQueuePage({ params }: { params: Promise<{ sl
     ? await getCustomerState(slug, hashCustomerToken(token))
     : null;
   const initialState: CustomerQueueState = savedState ?? {
-    queue, entry: null, position: null, peopleAhead: null, estimatedWaitMinutes: null,
+    queue,
+    entry: null,
+    waitingCount: await getWaitingCount(queue.id),
+    position: null,
+    peopleAhead: null,
+    estimatedWaitMinutes: null,
   };
   return <CustomerQueue initialState={initialState} />;
 }
